@@ -1,0 +1,60 @@
+{
+  "name": "basescope",
+  "version": "0.1.0",
+  "description": "The read-only safety layer for onchain AI agents. A Model Context Protocol (MCP) server that gives AI assistants safe, read-only onchain tools on Base and EVM chains — token/contract safety checks, risky-approval detection, verified-source lookup, balances, ENS, gas and prices. No private keys, no required API keys.",
+  "type": "module",
+  "license": "MIT",
+  "author": "chasdaddy",
+  "homepage": "https://github.com/chasdaddy/basescope#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chasdaddy/basescope.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chasdaddy/basescope/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "basescope": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "smoke": "node test/smoke.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "web3",
+    "ethereum",
+    "base",
+    "evm",
+    "ai-agents",
+    "onchain",
+    "security",
+    "honeypot",
+    "rug-check",
+    "token-safety",
+    "viem"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "viem": "^2.55.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
