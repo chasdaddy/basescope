@@ -29,6 +29,10 @@ process.stdout.write(`Connected. ${tools.length} tools: ${tools.map((t) => t.nam
 
 await call("list_supported_chains");
 await call("get_native_balance", { chain: "base", address: "vitalik.eth" });
+await call("resolve_basename", { name: "jesse.base.eth" });
+await call("resolve_basename", { name: "base.base.eth" });
+await call("reverse_ens_lookup", { address: "0x2211d1D0020DAEA8039E46Cf1367962070d77DA9" });
+await call("get_native_balance", { chain: "base", address: "jesse.base.eth" });
 await call("get_token_info", { chain: "base", token: USDC_BASE });
 await call("inspect_contract", { chain: "base", address: USDC_BASE });
 await call("get_verified_source", { chain: "base", address: USDC_BASE });

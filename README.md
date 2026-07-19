@@ -6,7 +6,7 @@
 
 > **"Is this token / contract / approval actually safe?"**
 
-It checks for honeypots, rug-pull authority, hidden taxes, malicious addresses, and risky approvals — and looks up balances, ENS names, verified source, gas, and prices along the way.
+It checks for honeypots, rug-pull authority, hidden taxes, malicious addresses, and risky approvals — and looks up balances, ENS names, Basenames (`*.base.eth`), verified source, gas, and prices along the way.
 
 ### Why it's different
 
@@ -59,7 +59,7 @@ Restart your client and ask it something like *"Use basescope to check if token 
 
 ## Tools
 
-All tools are read-only. `chain` accepts `base` (default), `ethereum`, `optimism`, `arbitrum`, or `polygon`. Address fields accept a `0x` address **or** an ENS name.
+All tools are read-only. `chain` accepts `base` (default), `ethereum`, `optimism`, `arbitrum`, or `polygon`. Address fields accept a `0x` address, an ENS name, **or** a Basename (`*.base.eth`) — Basenames resolve automatically via the Base L2 Resolver.
 
 | Tool | What it does |
 | --- | --- |
@@ -70,7 +70,8 @@ All tools are read-only. `chain` accepts `base` (default), `ethereum`, `optimism
 | **inspect_contract** | Is the address a contract? Bytecode size + transaction count. |
 | **get_token_info** | ERC-20 name / symbol / decimals, and optionally a holder's balance. |
 | **get_native_balance** | Native coin (ETH / POL / …) balance of an address or ENS name. |
-| **resolve_ens_name** / **reverse_ens_lookup** | ENS name → address, and address → primary ENS name. |
+| **resolve_ens_name** / **reverse_ens_lookup** | ENS name → address, and address → primary ENS name (also reports the primary Basename on Base). |
+| **resolve_basename** | Basename (`*.base.eth`) → address, via the Base L2 Resolver — Coinbase's ENS-compatible names on Base mainnet. |
 | **get_gas** | Current gas price + EIP-1559 fee suggestion. |
 | **get_token_price** | Current USD price for a token (via DefiLlama). |
 | **list_supported_chains** | The chains this server can read. |
@@ -113,7 +114,6 @@ Standing on the shoulders of excellent free/open services: onchain reads via [vi
 
 ## Roadmap
 
-- Basename (`*.base.eth`) resolution via the Base L2 resolver
 - Transaction / calldata simulation and decoding ("what will this actually do?")
 - Optional Etherscan V2 fallback for source & ABI/proxy resolution
 - More chains

@@ -8,6 +8,7 @@ import { toAddress } from "./resolve.js";
 import { getNativeBalance, getErc20Info } from "./services/balances.js";
 import { inspectContract, getActivity } from "./services/contract.js";
 import { resolveEns, reverseEns } from "./services/ens.js";
+import { resolveBasename, resolveBaseNameForAddress } from "./services/basenames.js";
 import { getGas } from "./services/gas.js";
 import { getTokenPrice } from "./services/prices.js";
 import { checkTokenSafety, checkAddressSafety } from "./services/safety.js";
@@ -100,15 +101,46 @@ server.registerTool(
 );
 
 server.registerTool(
+  "resolve_basename",
+  {
+    title: "Resolve Basename",
+    description:
+      "Resolve a Basename (e.g. jesse.base.eth) to its address via the Base L2 Resolver. Basenames are Coinbase's ENS-compatible names on Base mainnet and are not resolvable by L1 ENS. Read-only.",
+    inputSchema: { name: z.string().describe("Basename, e.g. name.base.eth") },
+  },
+  async ({ name }) => {
+    try {
+      return ok(await resolveBasename(name));
+    } catch (e) {
+      return fail(errMsg(e));
+    }
+  }
+);
+
+server.registerTool(
   "reverse_ens_lookup",
   {
-    title: "Reverse ENS lookup",
-    description: "Find the primary ENS name for an address, if it has one. Read-only.",
+    title: "Reverse name lookup",
+    description:
+      "Find the primary name for an address: its primary ENS name (Ethereum L1) and its primary Basename (Base mainnet), if set. Read-only.",
     inputSchema: { address: z.string().describe("0x address or ENS name") },
   },
   async ({ address }) => {
     try {
-      return ok(await reverseEns(await toAddress(address)));
+      const addr = await toAddress(address);
+      const [ens, base] = await Promise.all([
+        reverseEns(addr).catch(() => ({ name: null, hasPrimaryName: false })),
+        resolveBaseNameForAddress(addr).catch(() => ({
+          basename: null,
+          hasPrimaryBasename: false,
+        })),
+      ]);
+      return ok({
+        address: addr,
+        name: ens.name,
+        basename: base.basename,
+        hasPrimaryName: ens.hasPrimaryName || base.hasPrimaryBasename,
+      });
     } catch (e) {
       return fail(errMsg(e));
     }
