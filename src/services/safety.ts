@@ -93,7 +93,7 @@ export async function checkTokenSafety(
   if (buyTaxPct != null && buyTaxPct >= 10) flags.push(`high buy tax (${buyTaxPct}%)`);
   if (sellTaxPct != null && sellTaxPct >= 10) flags.push(`high sell tax (${sellTaxPct}%)`);
 
-  const riskLevel = deriveRisk({
+  const riskLevel = deriveRiskLevel({
     isHoneypot,
     sellTaxPct,
     g,
@@ -152,7 +152,11 @@ export async function checkAddressSafety(chain: ChainKey, address: string) {
   };
 }
 
-function deriveRisk(args: {
+/**
+ * Pure risk-tiering from the normalized signals. Exported so the heuristic —
+ * the core of the product — is locked down by unit tests.
+ */
+export function deriveRiskLevel(args: {
   isHoneypot: boolean | null;
   sellTaxPct: number | null;
   g: any;
