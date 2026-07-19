@@ -1,6 +1,6 @@
 {
   "name": "basescope",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The read-only safety layer for onchain AI agents. A Model Context Protocol (MCP) server that gives AI assistants safe, read-only onchain tools on Base and EVM chains — token/contract safety checks, risky-approval detection, verified-source lookup, balances, ENS, gas and prices. No private keys, no required API keys.",
   "type": "module",
   "license": "MIT",

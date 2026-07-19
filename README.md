@@ -19,31 +19,7 @@ It checks for honeypots, rug-pull authority, hidden taxes, malicious addresses, 
 
 ## Quickstart
 
-### Run from source (works today)
-
-```bash
-git clone https://github.com/chasdaddy/basescope.git
-cd basescope
-npm install
-npm run build
-```
-
-Then point your MCP client at the built server. For **Claude Desktop** (`claude_desktop_config.json`) or **Cursor** (`.cursor/mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "basescope": {
-      "command": "node",
-      "args": ["/absolute/path/to/basescope/dist/index.js"]
-    }
-  }
-}
-```
-
-### Via npm
-
-Once published, the one-liner is:
+Add basescope to any MCP client — **Claude Desktop** (`claude_desktop_config.json`), **Cursor** (`.cursor/mcp.json`), or any other. No install step; `npx` fetches it on first run:
 
 ```json
 {
@@ -53,7 +29,21 @@ Once published, the one-liner is:
 }
 ```
 
-Restart your client and ask it something like *"Use basescope to check if token 0x… on Base is safe."*
+Restart your client and ask something like *"Use basescope to check if token 0x… on Base is safe."*
+
+<details>
+<summary><b>Prefer to run from source?</b></summary>
+
+```bash
+git clone https://github.com/chasdaddy/basescope.git
+cd basescope
+npm install
+npm run build
+```
+
+Then set the server `command` to `node` with args `["/absolute/path/to/basescope/dist/index.js"]`.
+
+</details>
 
 ---
 
